@@ -1,0 +1,13 @@
+GROUP:
+1 SELECT COUNT(*) AS `anno_iscrizione`,YEAR(`enrolment_date`) FROM `students` GROUP BY YEAR(`enrolment_date`)
+2 SELECT COUNT(*) AS `luogo_ufficio` , `office_address` FROM `teachers` GROUP BY `office_address`
+3 SELECT AVG(`vote`) AS `media` , `exam_id` FROM `exam_student` GROUP BY `exam_id`
+4 SELECT COUNT(*) AS `corsi_dipartimenti` , `department_id` FROM `degrees` GROUP BY `department_id`
+
+
+JOIN
+1 SELECT `students`.`name`,`students`.`surname`, `degrees`.`name` FROM `students` JOIN `degrees` ON `students`.`degree_id`=`degrees`.`id` WHERE `degrees`.`name`='Corso di Laurea in Economia'
+2 SELECT `degrees`. `name`,`degrees`.`department_id`, `departments`.`name` FROM `degrees` JOIN `departments`ON `degrees`.`department_id`= `departments`.`id` WHERE `departments`.`name` = 'Dipartimento di Neuroscienze'
+3 SELECT `teachers`.`name`,`teachers`.`surname`,`courses`.`name` FROM `teachers` JOIN `course_teacher` ON `teachers`.`id` = `course_teacher`.`teacher_id` JOIN `courses` ON `course_teacher`.`course_id` = `courses`.`id` JOIN `degrees` ON `courses`.`degree_id` = `degrees`.`id` WHERE `teachers`.`name`='Fulvio' AND `teachers`.`surname`='Amato'
+4 (BONUS) SELECT `students`.`fiscal_code` , COUNT(`exam_student`.`exam_id`) AS `tentativi_esame` FROM `students` JOIN `exam_student` ON `students`.`id` = `exam_student`.`student_id` JOIN `exams` ON `exam_student`.`exam_id` = `exams`.`id` JOIN `courses` ON `exams`.`course_id` = `courses`.`id` GROUP BY `students`.`fiscal_code`
+
